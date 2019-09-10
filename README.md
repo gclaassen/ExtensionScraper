@@ -25,3 +25,6 @@ python ./pyscraper.py "-t" ".jpg" "-s" "c:/" "-d" "f:/scrapedFiles/" "-c"
 - sys
 - shutil
 - time
+
+## Python
+- Python 3.7.3
