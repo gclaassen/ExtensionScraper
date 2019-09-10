@@ -15,7 +15,7 @@ The files matching the extension will either be moved or copied to a destination
 | -m      | Move the file from the source to the destination | -m |
   
 ```
-python ./pyscraper.py "-t" ".jpg" "-s" "c:" "-d" "f:/scrapedFiles/" "-c" 
+python ./pyscraper.py "-t" ".jpg" "-s" "c:/" "-d" "f:/scrapedFiles/" "-c" 
 ```
 
 ## Required Modules
