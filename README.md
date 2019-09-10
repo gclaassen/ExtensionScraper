@@ -11,7 +11,7 @@ The files matching the extension will either be moved or copied to a destination
 | -t      | File extension to be moved/copied | -t *.ext* |
 | -s      | Source Directory | -s *src/dir/* |
 | -d      | Destination Path | -d *dest/dir/* |
-| -c      | Copy the file to the destination | -c |
+| -c      | Copy the file to the destination **OR** | -c |
 | -m      | Move the file from the source to the destination | -m |
   
 ## Required Modules
