@@ -1,4 +1,4 @@
-# pyScraper
+# Extension Scraper
 Scraper Scripts written in Python
 
 These scrapers will allow the user to search in a set source directories (all folders and subfolders in the source directory) for files with a set extension.
