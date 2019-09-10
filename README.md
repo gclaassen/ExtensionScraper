@@ -13,7 +13,9 @@ The files matching the extension will either be moved or copied to a destination
 | -d      | Destination Path | -d *dest/dir/* |
 | -c      | Copy the file to the destination **OR** | -c |
 | -m      | Move the file from the source to the destination | -m |
-  
+
+run **__runScraper.bat**
+or call command in terminal
 ```
 python ./pyscraper.py "-t" ".jpg" "-s" "c:/" "-d" "f:/scrapedFiles/" "-c" 
 ```
