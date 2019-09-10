@@ -1,7 +1,7 @@
 # Extension Scraper
 Scraper Scripts written in Python
 
-These scrapers will allow the user to search in a set source directories (all folders and subfolders in the source directory) for files with a set extension.
+These scrapers will allow the user to search in set source directories (all folders and subfolders in the source directory) for files with a set extension (and EXIF info).
 
 The files matching the extension will either be moved or copied to a destination directory
 
