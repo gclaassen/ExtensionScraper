@@ -14,6 +14,10 @@ The files matching the extension will either be moved or copied to a destination
 | -c      | Copy the file to the destination **OR** | -c |
 | -m      | Move the file from the source to the destination | -m |
   
+```
+python ./pyscraper.py "-t" ".jpg" "-s" "c:" "-d" "f:/scrapedFiles/" "-c" 
+```
+
 ## Required Modules
 - exif (photograph)
 - os
