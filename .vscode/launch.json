@@ -6,9 +6,9 @@
             "name": "Python: pyScraper.py",
             "type": "python",
             "request": "launch",
-            "program": "h:/SGD/ws/idas3/ws/GCN/pyScraper/pyScraper.py",
-            // "args" : ["-t", ".jpg", "-s", "c:/", "-d", "h:/SGD/ws/idas3/ws/GCN/temp/", "-c"],
-            "args" : ["-t", ".pdf", "-s", "c:/", "-d", "h:/SGD/ws/idas3/ws/GCN/temp/", "-c"],
+            "program": "h:/pyScraper/pyScraper.py",
+            // "args" : ["-t", ".jpg", "-s", "c:/", "-d", "h:/temp/", "-c"],
+            "args" : ["-t", ".pdf", "-s", "c:/", "-d", "h:/temp/", "-c"],
             "console": "integratedTerminal"
         }
     ]
