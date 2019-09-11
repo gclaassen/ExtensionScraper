@@ -1,20 +1,15 @@
 
-import os, sys, getopt, shutil
+import os, sys
+import getopt
+import shutil
 import time
-# TODO: arguments
-# TODO: check os type
-# TODO check if dirs exist ->SHAP
-# TODO create list of invalid directories [no go areas] ->SHAP
-# TODO: create list of directories were files may not be deleted
-# TODO create text file with inputs of where files were located, file dates, file names and comments ->SHAP
-# TODO used arguments to either list locations of files, copy files or movE files ->SHAP
-# TODO show in terminal places of current search, the files in question and progress ->SHAP
-# TODO: Check EXIF data for camera info
+from exif import Image
 
 EXT_TYPE    = 0
 MOVE_TYPE   = 1
 SCR_DIR     = 2
 DEST_DIR    = 3
+EXIF_ONLY   = 4
 
 COPY = 0
 MOVE = 1
@@ -33,10 +28,10 @@ def argumentExtraction(argv):
     srcFile     = None
     extType     = None
     moveType    = None
-    fileMoved   = 0
+    exifOnly    = True
 
     try:
-        [opts, argv] = getopt.getopt(argv,"ht:s:d:cm",["help", "type=", "srcfile=", "destfile=", "copy", "move"])
+        [opts, argv] = getopt.getopt(argv,"ht:s:d:cmz",["help", "type=", "srcfile=", "destfile=", "copy", "move", "all"])
     except getopt.GetoptError:
         helpPrints()
         return None
@@ -59,8 +54,11 @@ def argumentExtraction(argv):
         elif opt in ("-m", "--move"):
             moveType = MOVE
             print('Move the files from {0} to {1}'.format(srcFile, destFile))
+        elif opt in ("-z", "--all"):
+            exifOnly = False
+            print('Include all {0} types'.format(extType))
 
-    return [extType, moveType, srcFile, destFile]
+    return [extType, moveType, srcFile, destFile, exifOnly]
 
 def helpPrints():
     print('\npyScraper.py <arguments> \n')
@@ -80,43 +78,83 @@ def main(argv):
 
 
 def scraper(scraperParams):
+    fileMoved   = 0
+
     reportFile = open(os.path.join(scraperParams[DEST_DIR],REPORT_NAME),"w+")
 
     startTime = time.time()
 
-    for root, dirs, files in os.walk(scraperParams[SCR_DIR], topdown = True):
+    for root, _, files in os.walk(scraperParams[SCR_DIR], topdown = True):
         ignoreDir = any(word for word in ignoreDirKeyWords if word in root)
         if(ignoreDir == False):
             print("root directory: {0}".format(root))
             for filename in files:
                 print("filename: {0}".format(filename))
-                filename_without_extension, extension = os.path.splitext(filename)
-                if extension == scraperParams[EXT_TYPE]:
+                _, extension = os.path.splitext(filename)
+                if extension.lower() == scraperParams[EXT_TYPE].lower():
                     moveFile = os.path.join(root,filename)
-                    if(scraperParams[MOVE_TYPE] == COPY):
-                        print('copy file {0}'.format(moveFile))
-                        try:
-                            dest = shutil.copy2(moveFile, scraperParams[DEST_DIR])
-                            print('file copied to {0}'.format(dest))
-                            reportFile.write('{0}\t--->\t{1}\n'.format(moveFile,dest))
-                            fileMoved += 1
-                        except:
-                            print('FAILED to copy file {0}'.format(moveFile))
-                    elif(scraperParams[MOVE_TYPE] == MOVE):
-                        print('move file {0}'.format(moveFile))
-                        try:
-                            dest = shutil.move(moveFile, scraperParams[DEST_DIR])
-                            print('file moved to {0}'.format(dest))
-                            reportFile.write('{0}\t--->\t{1}\n'.format(moveFile,dest))
-                            fileMoved += 1
-                        except:
-                            print('FAILED to move file {0}'.format(moveFile))
+                    with open(moveFile, 'rb') as open_file:
+                        image_file = Image(open_file)
+
+                        if(image_file.has_exif == True):
+                            if(hasattr(image_file,'make')):
+                                make = image_file.make.replace(" ", "_")
+                                makeDir = os.path.join(scraperParams[DEST_DIR],make)
+                                if not os.path.exists(makeDir):
+                                    os.mkdir(makeDir)
+                                destDir = makeDir
+                            else:
+                                make = 'unknown'
+                                makeDir = os.path.join(scraperParams[DEST_DIR],make)
+                                if not os.path.exists(makeDir):
+                                    os.mkdir(makeDir)
+                                destDir = makeDir
+
+                            if(hasattr(image_file,'model')):
+                                model = image_file.model.replace(" ", "_")
+                                modelDir = os.path.join(makeDir, model)
+                                if not os.path.exists(modelDir):
+                                    os.mkdir(modelDir)
+                                destDir = modelDir
+
+                            if(hasattr(image_file,'datetime')):
+                                fileNewName = image_file.datetime.replace(" ","_").replace(":","_") + extension
+                            else:
+                                fileNewName = filename
+                            destDir = os.path.join(destDir, fileNewName)
+
+                        elif(scraperParams[EXIF_ONLY] == False):
+                            make = 'unknown'
+                            makeDir = os.path.join(scraperParams[DEST_DIR],make)
+                            if not os.path.exists(makeDir):
+                                os.mkdir(makeDir)
+                            destDir = os.path.join(makeDir, filename)
+
+                    if(image_file.has_exif == True or scraperParams[EXIF_ONLY] == False):
+                        if(scraperParams[MOVE_TYPE] == COPY):
+                            print('copy file {0}'.format(moveFile))
+                            try:
+                                dest = shutil.copy2(moveFile, destDir)
+                                print('file copied to {0}'.format(dest))
+                                reportFile.write('{0}\t--->\t{1}\n'.format(moveFile,dest))
+                                fileMoved += 1
+                            except:
+                                print('FAILED to copy file {0}'.format(moveFile))
+                        elif(scraperParams[MOVE_TYPE] == MOVE):
+                            print('move file {0}'.format(moveFile))
+                            try:
+                                dest = shutil.move(moveFile, destDir)
+                                print('file moved to {0}'.format(dest))
+                                reportFile.write('{0}\t--->\t{1}\n'.format(moveFile,dest))
+                                fileMoved += 1
+                            except:
+                                print('FAILED to move file {0}'.format(moveFile))
 
     reportFile.close()
     endTime = time.time()
     totalTime = endTime - startTime
-    print("Time Taken: {0}".format(totalTime))
-    print("Total Files Moved: {0}".format(totalTime))
+    print("Time Taken: {0} seconds".format(totalTime))
+    print("Total Files Moved: {0}".format(fileMoved))
 
 if __name__ == "__main__":
     main(sys.argv[1:])

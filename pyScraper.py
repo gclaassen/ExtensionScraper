@@ -1,14 +1,8 @@
 
-import os, sys, getopt, shutil
+import os, sys
+import getopt
+import shutil
 import time
-# TODO: arguments
-# TODO: check os type
-# TODO check if dirs exist ->SHAP
-# TODO create list of invalid directories [no go areas] ->SHAP
-# TODO: create list of directories were files may not be deleted
-# TODO create text file with inputs of where files were located, file dates, file names and comments ->SHAP
-# TODO used arguments to either list locations of files, copy files or movE files ->SHAP
-# TODO show in terminal places of current search, the files in question and progress ->SHAP
 
 EXT_TYPE    = 0
 MOVE_TYPE   = 1
@@ -83,13 +77,13 @@ def scraper(scraperParams):
 
     startTime = time.time()
 
-    for root, dirs, files in os.walk(scraperParams[SCR_DIR], topdown = True):
+    for root, _, files in os.walk(scraperParams[SCR_DIR], topdown = True):
         ignoreDir = any(word for word in ignoreDirKeyWords if word in root)
         if(ignoreDir == False):
             print("root directory: {0}".format(root))
             for filename in files:
                 print("filename: {0}".format(filename))
-                filename_without_extension, extension = os.path.splitext(filename)
+                _, extension = os.path.splitext(filename)
                 if extension == scraperParams[EXT_TYPE]:
                     moveFile = os.path.join(root,filename)
                     if(scraperParams[MOVE_TYPE] == COPY):
