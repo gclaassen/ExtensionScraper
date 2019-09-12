@@ -1,13 +1,14 @@
 
-import os, sys
+import os
+import sys
 import getopt
 import shutil
 import time
 
-EXT_TYPE    = 0
-MOVE_TYPE   = 1
-SCR_DIR     = 2
-DEST_DIR    = 3
+EXT_TYPE = 0
+MOVE_TYPE = 1
+SCR_DIR = 2
+DEST_DIR = 3
 
 COPY = 0
 MOVE = 1
@@ -21,14 +22,16 @@ ignoreDirKeyWords = [
     'AppData'
 ]
 
+
 def argumentExtraction(argv):
-    destFile    = None
-    srcFile     = None
-    extType     = None
-    moveType    = None
+    destFile = None
+    srcFile = None
+    extType = None
+    moveType = None
 
     try:
-        [opts, argv] = getopt.getopt(argv,"ht:s:d:cm",["help", "type=", "srcfile=", "destfile=", "copy", "move"])
+        [opts, argv] = getopt.getopt(
+            argv, "ht:s:d:cm", ["help", "type=", "srcfile=", "destfile=", "copy", "move"])
     except getopt.GetoptError:
         helpPrints()
         return None
@@ -54,6 +57,7 @@ def argumentExtraction(argv):
 
     return [extType, moveType, srcFile, destFile]
 
+
 def helpPrints():
     print('\npyScraper.py <arguments> \n')
     print('~~~ARGUMENT LIST~~~\n')
@@ -72,13 +76,13 @@ def main(argv):
 
 
 def scraper(scraperParams):
-    fileMoved   = 0
+    fileMoved = 0
 
-    reportFile = open(os.path.join(scraperParams[DEST_DIR],REPORT_NAME),"w+")
+    reportFile = open(os.path.join(scraperParams[DEST_DIR], REPORT_NAME), "w+")
 
     startTime = time.time()
 
-    for root, _, files in os.walk(scraperParams[SCR_DIR], topdown = True):
+    for root, _, files in os.walk(scraperParams[SCR_DIR], topdown=True):
         ignoreDir = any(word for word in ignoreDirKeyWords if word in root)
         if(ignoreDir == False):
             print("root directory: {0}".format(root))
@@ -88,22 +92,26 @@ def scraper(scraperParams):
 
                 extensionExists = extension.lower() in scraperParams[EXT_TYPE]
                 if extensionExists:
-                    moveFile = os.path.join(root,filename)
+                    moveFile = os.path.join(root, filename)
                     if(scraperParams[MOVE_TYPE] == COPY):
                         print('copy file {0}'.format(moveFile))
                         try:
-                            dest = shutil.copy2(moveFile, scraperParams[DEST_DIR])
+                            dest = shutil.copy2(
+                                moveFile, scraperParams[DEST_DIR])
                             print('file copied to {0}'.format(dest))
-                            reportFile.write('{0}\t--->\t{1}\n'.format(moveFile,dest))
+                            reportFile.write(
+                                '{0}\t--->\t{1}\n'.format(moveFile, dest))
                             fileMoved += 1
                         except:
                             print('FAILED to copy file {0}'.format(moveFile))
                     elif(scraperParams[MOVE_TYPE] == MOVE):
                         print('move file {0}'.format(moveFile))
                         try:
-                            dest = shutil.move(moveFile, scraperParams[DEST_DIR])
+                            dest = shutil.move(
+                                moveFile, scraperParams[DEST_DIR])
                             print('file moved to {0}'.format(dest))
-                            reportFile.write('{0}\t--->\t{1}\n'.format(moveFile,dest))
+                            reportFile.write(
+                                '{0}\t--->\t{1}\n'.format(moveFile, dest))
                             fileMoved += 1
                         except:
                             print('FAILED to move file {0}'.format(moveFile))
@@ -113,6 +121,7 @@ def scraper(scraperParams):
     totalTime = endTime - startTime
     print("Time Taken: {0}".format(totalTime))
     print("Total Files Moved: {0}".format(totalTime))
+
 
 if __name__ == "__main__":
     main(sys.argv[1:])

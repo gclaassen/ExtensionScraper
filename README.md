@@ -1,5 +1,6 @@
 # Extension Scraper
-*In Development*
+
+_In Development_
 
 Scraper Scripts written in Python
 
@@ -8,22 +9,25 @@ These scrapers will allow the user to search in set source directories (all fold
 The files matching the extension will either be moved or copied to a destination directory
 
 ## Argument List
-| Command | Description | Example |
-| ------- | ----------- | ------- |
-| -t      | File extension to be moved/copied | -t *.ext* |
-| -s      | Source Directory | -s *src/dir/* |
-| -d      | Destination Path | -d *dest/dir/* |
-| -c      | Copy the file to the destination **OR** | -c |
-| -m      | Move the file from the source to the destination | -m |
-| -z      | Check all the ext types not only EXIF | -z |
 
-Run **__runScraper.bat**
+| Command | Description                                      | Example        |
+| ------- | ------------------------------------------------ | -------------- |
+| -t      | File extension to be moved/copied                | -t _.ext_      |
+| -s      | Source Directory                                 | -s _src/dir/_  |
+| -d      | Destination Path                                 | -d _dest/dir/_ |
+| -c      | Copy the file to the destination **OR**          | -c             |
+| -m      | Move the file from the source to the destination | -m             |
+| -z      | Check all the ext types not only EXIF            | -z             |
+
+Run **\_\_runScraper.bat**
 or call command in terminal:
+
 ```
 python ./pyscraper.py "-t" ".jpg" "-s" "c:/" "-d" "f:/scrapedFiles/" "-c" "-z"
 ```
 
 ## Required Modules
+
 - exif (photograph)
 - os
 - getopt
@@ -32,10 +36,13 @@ python ./pyscraper.py "-t" ".jpg" "-s" "c:/" "-d" "f:/scrapedFiles/" "-c" "-z"
 - time
 
 ## Python
+
 - Python 3.7.3
 
 ## TODO:
+
 - [ ] Arguments
+- [ ] Better Code Format
 - [x] Check if dirs exist
 - [x] Create list of invalid directories [no go areas]
 - [ ] Create list of directories were files may not be deleted

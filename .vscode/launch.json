@@ -1,13 +1,11 @@
 {
     "version": "0.2.0",
-    "configurations": [
-        {
-            "name": "Python: pyPhotographScraper.py",
-            "type": "python",
-            "request": "launch",
-            "program": "d:/ws/extension-scraper/pyPhotographScraper.py",
-            "args" : ["-t", ".jpg .png", "-s", "D:/temp/photos/", "-d", "D:/temp", "-m", "-z"],
-            "console": "integratedTerminal"
-        }
-    ]
+    "configurations": [{
+        "name": "Python: pyPhotographScraper.py",
+        "type": "python",
+        "request": "launch",
+        "program": "d:/ws/extension-scraper/pyPhotographScraper.py",
+        "args": ["-t", ".jpg .png", "-s", "D:/temp/photos/", "-d", "D:/temp", "-m", "-z"],
+        "console": "integratedTerminal"
+    }]
 }
