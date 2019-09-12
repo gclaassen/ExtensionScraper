@@ -26,7 +26,6 @@ def argumentExtraction(argv):
     srcFile     = None
     extType     = None
     moveType    = None
-    fileMoved   = 0
 
     try:
         [opts, argv] = getopt.getopt(argv,"ht:s:d:cm",["help", "type=", "srcfile=", "destfile=", "copy", "move"])
@@ -38,7 +37,7 @@ def argumentExtraction(argv):
             helpPrints()
             exit()
         elif opt in ("-t", "--type"):
-            extType = arg
+            extType = arg.split(' ')
             print('File type is {0}'.format(extType))
         elif opt in ("-s", "--srcfile"):
             srcFile = arg
@@ -73,6 +72,8 @@ def main(argv):
 
 
 def scraper(scraperParams):
+    fileMoved   = 0
+
     reportFile = open(os.path.join(scraperParams[DEST_DIR],REPORT_NAME),"w+")
 
     startTime = time.time()
@@ -84,7 +85,9 @@ def scraper(scraperParams):
             for filename in files:
                 print("filename: {0}".format(filename))
                 _, extension = os.path.splitext(filename)
-                if extension == scraperParams[EXT_TYPE]:
+
+                extensionExists = extension.lower() in scraperParams[EXT_TYPE]
+                if extensionExists:
                     moveFile = os.path.join(root,filename)
                     if(scraperParams[MOVE_TYPE] == COPY):
                         print('copy file {0}'.format(moveFile))
