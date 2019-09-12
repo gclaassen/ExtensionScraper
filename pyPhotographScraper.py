@@ -16,6 +16,8 @@ MOVE = 1
 
 REPORT_NAME = "_report.txt"
 
+JPEG = '.jpg'
+
 ignoreDirKeyWords = [
     'Recycle',
     'Windows',
@@ -40,7 +42,7 @@ def argumentExtraction(argv):
             helpPrints()
             exit()
         elif opt in ("-t", "--type"):
-            extType = arg
+            extType = arg.split(' ')
             print('File type is {0}'.format(extType))
         elif opt in ("-s", "--srcfile"):
             srcFile = arg
@@ -79,6 +81,7 @@ def main(argv):
 
 def scraper(scraperParams):
     fileMoved   = 0
+    has_exif    = False
 
     reportFile = open(os.path.join(scraperParams[DEST_DIR],REPORT_NAME),"w+")
 
@@ -91,46 +94,56 @@ def scraper(scraperParams):
             for filename in files:
                 print("filename: {0}".format(filename))
                 _, extension = os.path.splitext(filename)
-                if extension.lower() == scraperParams[EXT_TYPE].lower():
+
+                extensionExists = extension.lower() in scraperParams[EXT_TYPE]
+                if extensionExists:
                     moveFile = os.path.join(root,filename)
                     with open(moveFile, 'rb') as open_file:
-                        image_file = Image(open_file)
+                        if(extension.lower() == JPEG):
+                            image_file = Image(open_file)
 
-                        if(image_file.has_exif == True):
-                            if(hasattr(image_file,'make')):
-                                make = image_file.make.replace(" ", "_")
-                                makeDir = os.path.join(scraperParams[DEST_DIR],make)
-                                if not os.path.exists(makeDir):
-                                    os.mkdir(makeDir)
-                                destDir = makeDir
-                            else:
+                            if(image_file.has_exif == True):
+                                has_exif = True
+                                if(hasattr(image_file,'make')):
+                                    make = image_file.make.replace(" ", "_")
+                                    makeDir = os.path.join(scraperParams[DEST_DIR],make)
+                                    if not os.path.exists(makeDir):
+                                        os.mkdir(makeDir)
+                                    destDir = makeDir
+                                else:
+                                    make = 'unknown'
+                                    makeDir = os.path.join(scraperParams[DEST_DIR],make)
+                                    if not os.path.exists(makeDir):
+                                        os.mkdir(makeDir)
+                                    destDir = makeDir
+
+                                if(hasattr(image_file,'model')):
+                                    model = image_file.model.replace(" ", "_")
+                                    modelDir = os.path.join(makeDir, model)
+                                    if not os.path.exists(modelDir):
+                                        os.mkdir(modelDir)
+                                    destDir = modelDir
+
+                                if(hasattr(image_file,'datetime')):
+                                    fileNewName = image_file.datetime.replace(" ","_").replace(":","_") + extension
+                                else:
+                                    fileNewName = filename
+                                destDir = os.path.join(destDir, fileNewName)
+
+                            elif(scraperParams[EXIF_ONLY] == False):
                                 make = 'unknown'
                                 makeDir = os.path.join(scraperParams[DEST_DIR],make)
                                 if not os.path.exists(makeDir):
                                     os.mkdir(makeDir)
-                                destDir = makeDir
-
-                            if(hasattr(image_file,'model')):
-                                model = image_file.model.replace(" ", "_")
-                                modelDir = os.path.join(makeDir, model)
-                                if not os.path.exists(modelDir):
-                                    os.mkdir(modelDir)
-                                destDir = modelDir
-
-                            if(hasattr(image_file,'datetime')):
-                                fileNewName = image_file.datetime.replace(" ","_").replace(":","_") + extension
-                            else:
-                                fileNewName = filename
-                            destDir = os.path.join(destDir, fileNewName)
-
-                        elif(scraperParams[EXIF_ONLY] == False):
+                                destDir = os.path.join(makeDir, filename)
+                        else:
                             make = 'unknown'
                             makeDir = os.path.join(scraperParams[DEST_DIR],make)
                             if not os.path.exists(makeDir):
                                 os.mkdir(makeDir)
                             destDir = os.path.join(makeDir, filename)
 
-                    if(image_file.has_exif == True or scraperParams[EXIF_ONLY] == False):
+                    if(has_exif == True or scraperParams[EXIF_ONLY] == False):
                         if(scraperParams[MOVE_TYPE] == COPY):
                             print('copy file {0}'.format(moveFile))
                             try:
@@ -149,6 +162,7 @@ def scraper(scraperParams):
                                 fileMoved += 1
                             except:
                                 print('FAILED to move file {0}'.format(moveFile))
+                    has_exif = False
 
     reportFile.close()
     endTime = time.time()

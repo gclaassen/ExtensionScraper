@@ -6,7 +6,7 @@
             "type": "python",
             "request": "launch",
             "program": "d:/ws/extension-scraper/pyPhotographScraper.py",
-            "args" : ["-t", ".jpg", "-s", "D:/temp/photos/", "-d", "D:/temp", "-m", "-z"],
+            "args" : ["-t", ".jpg .png", "-s", "D:/temp/photos/", "-d", "D:/temp", "-m", "-z"],
             "console": "integratedTerminal"
         }
     ]
