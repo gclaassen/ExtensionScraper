@@ -1,6 +1,6 @@
 # Extension Scraper
 
-_In Development_
+_V1.0.0_
 
 Scraper Scripts written in Python
 
@@ -12,7 +12,7 @@ The files matching the extension will either be moved or copied to a destination
 
 | Command | Description                                      | Example        |
 | ------- | ------------------------------------------------ | -------------- |
-| -t      | File extension to be moved/copied                | -t _.ext_      |
+| -t      | File extension to be moved/copied                | -t _.ext1_ _.extn_      |
 | -s      | Source Directory                                 | -s _src/dir/_  |
 | -d      | Destination Path                                 | -d _dest/dir/_ |
 | -c      | Copy the file to the destination **OR**          | -c             |
@@ -51,3 +51,5 @@ python ./pyscraper.py "-t" ".jpg" "-s" "c:/" "-d" "f:/scrapedFiles/" "-c" "-z"
 - [x] Show in terminal places of current search, the files in question and progress
 - [x] Check EXIF data for camera info
 - [ ] Other type of file naming conventions to choose from
+
+*vir ma. lief ma baie*
