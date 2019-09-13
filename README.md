@@ -51,5 +51,7 @@ python ./pyscraper.py "-t" ".jpg" "-s" "c:/" "-d" "f:/scrapedFiles/" "-c" "-z"
 - [x] Show in terminal places of current search, the files in question and progress
 - [x] Check EXIF data for camera info
 - [ ] Other type of file naming conventions to choose from
+- [ ] GUI
+- [ ] Installer and executable
 
 *vir ma. lief ma baie*
