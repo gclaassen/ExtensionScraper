@@ -39,19 +39,4 @@ python ./pyscraper.py "-t" ".jpg" "-s" "c:/" "-d" "f:/scrapedFiles/" "-c" "-z"
 
 - Python 3.7.3
 
-## TODO:
-
-- [ ] Arguments
-- [ ] Better Code Format
-- [x] Check if dirs exist
-- [x] Create list of invalid directories [no go areas]
-- [ ] Create list of directories were files may not be deleted
-- [x] Create text file with inputs of where files were located, file dates, file names and comments
-- [x] Used arguments to either list locations of files, copy files or movE files
-- [x] Show in terminal places of current search, the files in question and progress
-- [x] Check EXIF data for camera info
-- [ ] Other type of file naming conventions to choose from
-- [ ] GUI
-- [ ] Installer and executable
-
 *vir ma. lief ma baie*
