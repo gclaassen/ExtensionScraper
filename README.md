@@ -2,17 +2,21 @@
 
 _V1.0.0_
 
-Scraper Scripts written in Python
+## Scraper Scripts
 
-- These scrapers will allow the user to search in set source directories (all folders and subfolders in the source directory) for files with a set extension (and EXIF info).
+- Written in Python
+
+- These scrapers will allow the user to search in set source directories (all folders and subfolders in the source directory) for files with a set extension (and/or EXIF info).
 
 - The files matching the extension will either be moved or copied to a destination directory
 
 - The files will be renamed in the date and time of the ext
 
-pyPhotoscraper:
+### pyPhotographScraper.py:
 
-- the images will be stored in a directory structure starting with make and then model:
+- Check exif data if a jpg otherwise ignore if stated in argument
+
+- The images will be stored in a directory structure starting with make and then model:
   - /make/
     - /model/
       - 2012_02_03_14_00.jpg
@@ -39,7 +43,7 @@ python ./pyscraper.py "-t" ".jpg" "-s" "c:/" "-d" "f:/scrapedFiles/" "-c" "-z"
 
 ## Required Modules
 
-- exif (photograph)
+- exif (pyPhotographScraper.py)
 - os
 - getopt
 - sys
