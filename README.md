@@ -13,11 +13,11 @@ Scraper Scripts written in Python
 pyPhotoscraper:
 
 - the images will be stored in a directory structure starting with make and then model:
-  - make
-    - model
-      -2012_02_03_14_00.jpg
-      -2012_02_03_14_01.jpg
-      -2012_02_03_14_02.jpg
+  - /make/
+   - /model/
+    - 2012_02_03_14_00.jpg
+    - 2012_02_03_14_01.jpg
+    - 2012_02_03_14_02.jpg
 
 ## Argument List
 
