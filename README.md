@@ -1,6 +1,6 @@
 # Extension Scraper
 
-_V1.0.0_
+_V1.0.0_ *updates incoming*
 
 ## Scraper Scripts
 
