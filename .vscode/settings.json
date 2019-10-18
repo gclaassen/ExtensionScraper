@@ -1,6 +1,15 @@
 {
     "python.pythonPath": "D:\\Anaconda\\python.exe",
     "workbench.colorCustomizations": {
-        "tab.unfocusedActiveBorder": "#fff0"
-    }
+        "activityBar.background": "#d9ae94",
+        "activityBar.foreground": "#15202b",
+        "activityBar.inactiveForeground": "#15202b99",
+        "activityBarBadge.background": "#328d54",
+        "activityBarBadge.foreground": "#e7e7e7",
+        "panel.border": "#d9ae94",
+        "sideBar.border": "#d9ae94",
+        "editorGroup.border": "#d9ae94",
+        "tab.activeBorder": "#d9ae94"
+    },
+    "peacock.color": "#cb916f"
 }
