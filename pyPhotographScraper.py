@@ -23,7 +23,10 @@ ignoreDirKeyWords = [
     'Recycle',
     'Windows',
     'System Volume Information',
-    'AppData'
+    'AppData',
+    'Recovery',
+    'ProgramData',
+    'MSOCache'
 ]
 
 
