@@ -38,7 +38,7 @@ Run **\_\_runScraper.bat**
 or call command in terminal:
 
 ```
-python ./pyscraper.py "-t" ".jpg" "-s" "c:/" "-d" "f:/scrapedFiles/" "-c" "-z"
+python ./pyscraper.py "-t" ".jpg .png .xyz .abc" "-s" "c:/" "-d" "f:/scrapedFiles/" "-c" "-z"
 ```
 
 ## Required Modules
