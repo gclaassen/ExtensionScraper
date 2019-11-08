@@ -49,6 +49,7 @@ python ./pyscraper.py "-t" ".jpg" "-s" "c:/" "-d" "f:/scrapedFiles/" "-c" "-z"
 - sys
 - shutil
 - time
+- datetime
 
 ## Python
 

@@ -5,6 +5,7 @@ import getopt
 import shutil
 import time
 from exif import Image
+from datetime import datetime
 
 EXT_TYPE = 0
 MOVE_TYPE = 1
@@ -90,7 +91,8 @@ def scraper(scraperParams):
     fileMoved = 0
     has_exif = False
 
-    reportFile = open(os.path.join(scraperParams[DEST_DIR], REPORT_NAME), "w+")
+    reportFile = open(os.path.join(scraperParams[DEST_DIR], REPORT_NAME), "a+")
+    reportFile.write("{0}\n".format(datetime.now().strftime("%d/%m/%Y %H:%M:%S")))
 
     startTime = time.time()
 
@@ -180,11 +182,14 @@ def scraper(scraperParams):
                                     'FAILED to move file {0}'.format(moveFile))
                     has_exif = False
 
-    reportFile.close()
     endTime = time.time()
     totalTime = endTime - startTime
-    print("Time Taken: {0} seconds".format(totalTime))
+    print("Time Taken: {0}".format(totalTime))
     print("Total Files Moved: {0}".format(fileMoved))
+
+    reportFile.write("Time Taken: {0}\n".format(totalTime))
+    reportFile.write("Total Files Moved: {0}".format(fileMoved))
+    reportFile.close()
 
 
 if __name__ == "__main__":
