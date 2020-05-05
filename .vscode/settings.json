@@ -2,6 +2,8 @@
     "python.pythonPath": "D:\\Anaconda\\python.exe",
     "workbench.colorCustomizations": {
         "activityBar.background": "#d9ae94",
+        "activityBar.activeBackground": "#d9ae94",
+        "activityBar.activeBorder": "#328d54",
         "activityBar.foreground": "#15202b",
         "activityBar.inactiveForeground": "#15202b99",
         "activityBarBadge.background": "#328d54",
